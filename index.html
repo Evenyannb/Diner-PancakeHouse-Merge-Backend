@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="navbar.css">
+        <title>All Menus</title>   
+      </head>
+    <body>
+        <ul class="topnav">
+            <li><a href="Breakfast.html">Breakfast</a></li>
+            <li><a href="Lunch.html">Lunch ducks</a></li>
+            <li><a href="Dinner.html">Dinner</a></li>        
+            <li><a href="Vegetarian.html">Vegetarian</a></li>
+            <li class = "right"> <a class = "active" href= "login.html"> Login </a></li>
+        </ul>
+
+    <script>
+        async function fetchMenuItems() {
+            try {
+                const response = await fetch('http://localhost:8080/merger');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const menuItems = await response.json();
+
+        
+                const menuList = document.getElementById('menu-list');
+
+                
+                menuItems.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${item.name} - ${item.price}`; 
+                    menuList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Could not fetch menu items:', error);
+            }
+        }
+
+        window.onload = fetchMenuItems;
+    </script>
     
 </body>
 </html>
